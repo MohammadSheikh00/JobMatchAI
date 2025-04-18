@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Profile.css'; // استيراد ملف الـ CSS
+import defaultProfilePic from '../image/profile-pic.jpeg';
 
 const CompanyProfile = () => {
   const companyName = "AwesomeTech Ltd.";
@@ -12,7 +13,7 @@ const CompanyProfile = () => {
     bio: ''
   });
 
-  const [imageURL, setImageURL] = useState('https://via.placeholder.com/150');
+  const [imageURL, setImageURL] = useState(defaultProfilePic);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,19 +37,20 @@ const CompanyProfile = () => {
     <div className="profile-container">
       <div className="profile-content">
         <h2>Company Profile</h2>
+        <div className="image-wrapper">
 
-        <div className="profile-image-container">
-          <img src={imageURL} alt="Profile" className="profile-image" />
-          <label htmlFor="upload-photo" className="upload-btn">+</label>
-          <input
-            type="file"
-            id="upload-photo"
-            accept="image/*"
-            className="upload-input"
-            onChange={handleImageUpload}
-          />
+          <div className="profile-image-container">
+            <img src={imageURL} alt="Profile" className="profile-image" />
+            <label htmlFor="upload-photo" className="upload-btn">+</label>
+            <input
+              type="file"
+              id="upload-photo"
+              accept="image/*"
+              className="upload-input"
+              onChange={handleImageUpload}
+            />
+          </div>
         </div>
-
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">

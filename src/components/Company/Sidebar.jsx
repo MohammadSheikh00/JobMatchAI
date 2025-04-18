@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Sidebar.css';
 
 const CompanySidebar = ({ onSelect, activeSection }) => {
   const [activeButton, setActiveButton] = useState(activeSection);
@@ -17,7 +18,9 @@ const CompanySidebar = ({ onSelect, activeSection }) => {
 
   return (
     <aside className="bg-dark text-white p-4" style={{ width: '250px' }}>
-      <h4 className="mb-4">JobMatchAI</h4>
+      <h4 className="sidebar-title mb-4">
+        JobMatch<span className="gray-text">AI</span>
+      </h4>
       <ul className="nav flex-column">
         <li className="nav-item">
           <button

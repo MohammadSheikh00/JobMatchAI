@@ -13,6 +13,7 @@ body {
     opacity: 0;
     transform: translateY(15px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -29,7 +30,7 @@ body {
 }
 
 .job-form {
-   background: linear-gradient(135deg, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  background: linear-gradient(135deg, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
 
   border-radius: 30px;
   padding: 40px;
@@ -112,7 +113,7 @@ textarea {
 }
 
 .submit-button:hover {
-  background: linear-gradient(135deg, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  background: linear-gradient(135deg, rgb(32, 58, 67), rgb(44, 83, 100), rgb(15, 32, 39));
 
   color: #ffffff;
 

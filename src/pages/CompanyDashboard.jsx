@@ -7,6 +7,8 @@ import CompanyProfile from '../components/Company/Profile';
 import AddJob from '../components/Company/AddJob';
 import MyJobs from '../components/Company/MyJobs';
 
+const companyName = JSON.parse(localStorage.getItem('companyData'))?.name || 'Company';
+
 const CompanyDashboard = () => {
   const [selectedSection, setSelectedSection] = useState('welcome');
   const [postedJobs, setPostedJobs] = useState([]);
@@ -43,10 +45,12 @@ const CompanyDashboard = () => {
               }}
             />
             <h1 className="display-4 fw-bold z-1 mb-3 animate__animated animate__fadeInDown">
-              Welcome back, Company Manager!
+              Welcome back, <span className="text-info">{companyName}</span>!
             </h1>
+
+
             <p className="lead z-1 mb-4 animate__animated animate__fadeInUp">
-              Your command center to manage jobs, candidates, and company profile efficiently.
+              Your command center for managing job postings, candidates, and company profile all in one place.
             </p>
 
             <div className="row z-1 w-100 justify-content-center gap-3 mb-4">
@@ -54,19 +58,19 @@ const CompanyDashboard = () => {
                 {
                   icon: 'bi-briefcase-fill',
                   title: 'Post New Jobs',
-                  desc: 'Easily add and publish job opportunities.',
+                  desc: 'Easily create and publish new job opportunities to attract top talent. ',
                   color: 'text-primary',
                 },
                 {
                   icon: 'bi-people-fill',
                   title: 'Track Candidates',
-                  desc: 'View applicants and manage hiring process.',
+                  desc: '"Easily manage applicants and hiring steps.',
                   color: 'text-success',
                 },
                 {
                   icon: 'bi-person-badge-fill',
                   title: 'Edit Company Profile',
-                  desc: 'Keep your company info up-to-date and professional.',
+                  desc: 'Keep your company profile updated and polished.',
                   color: 'text-warning',
                 },
               ].map((card, i) => (
@@ -103,7 +107,7 @@ const CompanyDashboard = () => {
 
             <button
               onClick={() => setSelectedSection('profile')}
-              className="btn btn-outline-light px-4 py-2 rounded-pill animate__animated animate__fadeInUp animate__delay-3s"
+              className="btn btn-outline-light px-4 py-2 rounded-pill animate__animated animate__fadeInUp animate__delay-1s"
             >
               Go to Profile
             </button>
