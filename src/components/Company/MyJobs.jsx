@@ -1,22 +1,58 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const MyJobs = ({ jobs, onCandidateSelect }) => {
+const MyJobs = ({ jobs, onDeleteJob, onViewCandidates }) => {
+  const navigate = useNavigate();
+
+  const handleEdit = (job, index) => {
+    navigate('/addjob', { state: { job, index } });
+  };
+
   return (
-    <div>
-      <h2>My Jobs</h2>
+    <div className="container">
+      <h3 className="mb-4">📋 My Posted Jobs</h3>
+
       {Array.isArray(jobs) && jobs.length > 0 ? (
-        <ul>
+        <div className="row">
           {jobs.map((job, index) => (
-            <li key={index}>
-              <h4>{job.title}</h4>
-              <p>{job.description}</p>
-              <p><strong>Skills:</strong> {job.skills}</p>
-              <p><strong>Location:</strong> {job.location}</p>
-              <p><strong>Deadline:</strong> {job.applicationdeadline}</p>
-              <p><strong>Number of Positions:</strong> {job.numberofpositions}</p>
-            </li>
+            <div key={index} className="col-md-6 mb-4">
+              <div className="p-4 shadow-sm rounded bg-white border-start border-5 border-dark position-relative">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                  <h5 className="fw-bold text-dark">🧾 {job.title}</h5>
+                  <div className="btn-group">
+                    <button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={() =>
+                        navigate('/addjob', { state: { job, index } })
+                      }
+                    >
+                      ✏️ Edit
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => onDeleteJob(index)}
+                    >
+                      🗑 Delete
+                    </button>
+                  </div>
+                </div>
+
+                <p className="mb-1"><strong>📍 Location:</strong> {job.location}</p>
+                <p className="mb-1"><strong>📅 Deadline:</strong> {job.applicationdeadline}</p>
+                <p className="mb-1"><strong>🛠 Skills:</strong> {job.skills}</p>
+                <p className="mb-2"><strong>👥 Positions:</strong> {job.numberofpositions}</p>
+
+                <button
+                  className="btn btn-sm btn-dark"
+                  onClick={() => onViewCandidates(job)}
+                >
+                  🔍 View Candidates
+                </button>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No jobs posted yet.</p>
       )}

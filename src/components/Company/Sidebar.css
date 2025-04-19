@@ -1,6 +1,6 @@
 /*sidebar background color */
 aside.bg-dark {
-  background-color: #284E5D !important;
+  background-color: rgb(32, 58, 67) !important;
 }
 
 .sidebar-title {
@@ -11,8 +11,8 @@ aside.bg-dark {
 
 }
 
-.sidebar-title .gray-text {
-  color: #403475;
+.sidebar-title .ai-text {
+  color: #7763d0;
 
 }
 

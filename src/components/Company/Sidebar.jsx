@@ -19,7 +19,7 @@ const CompanySidebar = ({ onSelect, activeSection }) => {
   return (
     <aside className="bg-dark text-white p-4" style={{ width: '250px' }}>
       <h4 className="sidebar-title mb-4">
-        JobMatch<span className="gray-text">AI</span>
+        JobMatch<span className="ai-text">AI</span>
       </h4>
       <ul className="nav flex-column">
         <li className="nav-item">

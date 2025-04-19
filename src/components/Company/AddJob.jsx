@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './AddJob.css';
 import {
   FaBriefcase,
@@ -9,8 +9,14 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import clickSoundFile from '../image/click.mp3';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AddJob = ({ setPostedJobs }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const editingJob = location.state?.job || null;
+  const editingIndex = location.state?.index;
+
   const [job, setJob] = useState({
     title: '',
     description: '',
@@ -19,6 +25,12 @@ const AddJob = ({ setPostedJobs }) => {
     applicationdeadline: '',
     numberofpositions: '',
   });
+
+  useEffect(() => {
+    if (editingJob) {
+      setJob(editingJob);
+    }
+  }, [editingJob]);
 
   const [errors, setErrors] = useState({});
   const clickSound = useRef(null);
@@ -44,9 +56,22 @@ const AddJob = ({ setPostedJobs }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     clickSound.current.play();
+
     if (validateForm()) {
-      setPostedJobs((prevJobs) => [...prevJobs, job]);
-      alert('Job posted successfully!');
+      setPostedJobs((prevJobs) => {
+        if (editingJob !== null && editingIndex !== undefined) {
+          // تعديل الوظيفة
+          const updatedJobs = [...prevJobs];
+          updatedJobs[editingIndex] = job;
+          alert('Job updated successfully!');
+          return updatedJobs;
+        } else {
+          // وظيفة جديدة
+          alert('Job posted successfully!');
+          return [...prevJobs, job];
+        }
+      });
+
       setJob({
         title: '',
         description: '',
@@ -56,6 +81,7 @@ const AddJob = ({ setPostedJobs }) => {
         numberofpositions: '',
       });
       setErrors({});
+      navigate('/myjobs'); // رجوع لصفحة الوظائف
     }
   };
 
@@ -63,7 +89,7 @@ const AddJob = ({ setPostedJobs }) => {
     <div className="job-container">
       <audio ref={clickSound} src={clickSoundFile} preload="auto" />
       <div className="job-form fade-in">
-        <h2>Post a New Job</h2>
+        <h2>{editingJob ? 'Edit Job' : 'Post a New Job'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div className="form-group">
@@ -143,7 +169,7 @@ const AddJob = ({ setPostedJobs }) => {
           </div>
 
           <button type="submit" className="submit-button">
-            Submit Job
+            {editingJob ? 'Update Job' : 'Submit Job'}
           </button>
         </form>
       </div>

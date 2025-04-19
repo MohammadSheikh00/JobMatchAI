@@ -32,12 +32,15 @@
 
 /* حاوية الصورة الشخصية */
 .profile-image-container {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 30px;
   position: relative;
-  display: inline-block;
-  /* ضروري حتى يتموضع الزر بالنسبة للصورة فقط */
 }
+
+/* ضروري حتى يتموضع الزر بالنسبة للصورة فقط */
+
 
 .profile-image {
   width: 150px;
@@ -49,8 +52,8 @@
 
 .upload-btn {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 15%;
+  right: 42%;
   transform: translate(50%, 50%);
   /* يجعل الزر على حافة الصورة تمامًا */
   background-color: #3b82f6;
@@ -143,4 +146,9 @@ button {
 
 .change-password-btn:hover {
   background-color: #401056;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
