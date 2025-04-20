@@ -6,17 +6,17 @@ import CompanyHeader from '../components/Company/Header';
 import CompanyProfile from '../components/Company/Profile';
 import AddJob from '../components/Company/AddJob';
 import MyJobs from '../components/Company/MyJobs';
-import { useNavigate } from 'react-router-dom';
 
 const companyName = JSON.parse(localStorage.getItem('companyData'))?.name || 'Company';
 
 const CompanyDashboard = () => {
-  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = useState('welcome');
-  const handleViewCandidates = (job, index) => {
-    navigate(`/jobs/${index}/candidates`, { state: { job } });
-  };
   const [postedJobs, setPostedJobs] = useState([]);
+
+  const handleViewCandidates = (job, index) => {
+    // كان المفروض نروح لصفحة المرشحين، بس بدون راوتر منطبع البيانات مؤقتاً
+    console.log('View candidates for job:', job);
+  };
 
   const renderContent = () => {
     switch (selectedSection) {
@@ -59,7 +59,6 @@ const CompanyDashboard = () => {
             <h1 className="display-4 fw-bold z-1 mb-3 animate__animated animate__fadeInDown">
               Welcome back, <span className="text-info">{companyName}</span>!
             </h1>
-
 
             <p className="lead z-1 mb-4 animate__animated animate__fadeInUp">
               Your command center for managing job postings, candidates, and company profile all in one place.
