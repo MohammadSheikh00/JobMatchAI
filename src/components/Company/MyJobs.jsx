@@ -1,6 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ViewCandidatesModal from './ViewCandidatesModal';
+import { Modal, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const MyJobs = ({ jobs, onDeleteJob, onViewCandidates, onEditJob }) => {
+const MyJobs = ({ jobs, setJobs, onViewCandidates, onEditJob }) => {
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [candidates, setCandidates] = useState([]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [jobToDeleteIndex, setJobToDeleteIndex] = useState(null);
+  const [jobToDeleteTitle, setJobToDeleteTitle] = useState('');
+
+  const handleViewCandidates = (job) => {
+    setSelectedJob(job);
+
+    const fetchedCandidates = [
+      { name: 'Ahmed Ali', cv: 'path/to/cv1', match: 85 },
+      { name: 'Sara Zaid', cv: 'path/to/cv2', match: 90 },
+    ];
+    setCandidates(fetchedCandidates);
+  };
+
+  const handleDeleteJob = (index) => {
+    setJobToDeleteIndex(index);
+    setJobToDeleteTitle(jobs[index]?.title || '');
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = () => {
+    if (jobToDeleteIndex !== null) {
+      const updatedJobs = jobs.filter((_, i) => i !== jobToDeleteIndex);
+      if (typeof setJobs === 'function') {
+        setJobs(updatedJobs);
+      } else {
+        console.error('❌ setJobs is not a function');
+      }
+    }
+    setShowDeleteConfirm(false);
+    setJobToDeleteIndex(null);
+    setJobToDeleteTitle('');
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(false);
+    setJobToDeleteIndex(null);
+    setJobToDeleteTitle('');
+  };
+
   return (
     <div className="container">
       <h3 className="mb-4">📋 My Posted Jobs</h3>
@@ -19,10 +64,9 @@ const MyJobs = ({ jobs, onDeleteJob, onViewCandidates, onEditJob }) => {
                     >
                       ✏️ Edit
                     </button>
-
                     <button
                       className="btn btn-sm btn-outline-danger"
-                      onClick={() => onDeleteJob(index)}
+                      onClick={() => handleDeleteJob(index)}
                     >
                       🗑 Delete
                     </button>
@@ -36,7 +80,7 @@ const MyJobs = ({ jobs, onDeleteJob, onViewCandidates, onEditJob }) => {
 
                 <button
                   className="btn btn-sm btn-dark"
-                  onClick={() => onViewCandidates(job)}
+                  onClick={() => handleViewCandidates(job)}
                 >
                   🔍 View Candidates
                 </button>
@@ -47,6 +91,37 @@ const MyJobs = ({ jobs, onDeleteJob, onViewCandidates, onEditJob }) => {
       ) : (
         <p>No jobs posted yet.</p>
       )}
+
+      {selectedJob && (
+        <ViewCandidatesModal
+          job={selectedJob}
+          candidates={candidates}
+          onClose={() => {
+            setSelectedJob(null);
+            setCandidates([]);
+          }}
+        />
+      )}
+
+      <Modal show={showDeleteConfirm} onHide={cancelDelete} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to delete the job{' '}
+            <strong className="text-danger">"{jobToDeleteTitle}"</strong>?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Yes, Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
