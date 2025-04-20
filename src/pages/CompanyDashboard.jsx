@@ -14,7 +14,6 @@ const CompanyDashboard = () => {
   const [postedJobs, setPostedJobs] = useState([]);
 
   const handleViewCandidates = (job, index) => {
-    // كان المفروض نروح لصفحة المرشحين، بس بدون راوتر منطبع البيانات مؤقتاً
     console.log('View candidates for job:', job);
   };
 
@@ -29,8 +28,8 @@ const CompanyDashboard = () => {
           <MyJobs
             jobs={postedJobs}
             onViewCandidates={handleViewCandidates}
-            onEditJob={() => { }}
-            onDeleteJob={() => { }}
+            onEditJob={() => {}}
+            onDeleteJob={() => {}}
           />
         );
       case 'welcome':
@@ -69,20 +68,23 @@ const CompanyDashboard = () => {
                 {
                   icon: 'bi-briefcase-fill',
                   title: 'Post New Jobs',
-                  desc: 'Easily create and publish new job opportunities to attract top talent. ',
+                  desc: 'Easily create and publish new job opportunities to attract top talent.',
                   color: 'text-primary',
+                  action: 'createJob',
                 },
                 {
                   icon: 'bi-people-fill',
                   title: 'Track Candidates',
-                  desc: '"Easily manage applicants and hiring steps.',
+                  desc: 'Easily manage applicants and hiring steps.',
                   color: 'text-success',
+                  action: 'candidates',
                 },
                 {
                   icon: 'bi-person-badge-fill',
                   title: 'Edit Company Profile',
                   desc: 'Keep your company profile updated and polished.',
                   color: 'text-warning',
+                  action: 'profile',
                 },
               ].map((card, i) => (
                 <div
@@ -99,6 +101,7 @@ const CompanyDashboard = () => {
                       transition: 'all 0.3s ease-in-out',
                       cursor: 'pointer',
                     }}
+                    onClick={() => setSelectedSection(card.action)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.03)';
                       e.currentTarget.style.boxShadow = '2px 2px 8px #d1d9e6, -2px -2px 8px #ffffff';
