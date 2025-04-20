@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Profile.css';
 import defaultProfilePic from '../image/profile-pic.jpeg';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const CompanyProfile = () => {
   const companyName = "CompanyName.";
