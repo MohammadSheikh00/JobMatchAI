@@ -1,9 +1,15 @@
 import React from 'react';
-// import HomePage from './pages/HomePage';
+import JobSeekerDashboard from './pages/JobSeekerDashboard';
 import CompanyDashboard from './pages/CompanyDashboard';
+import { ApplicationsProvider } from './components/JobSeeker/ApplicationsContext'; // ✅ المسار الصحيح
 
 const App = () => {
-  return <CompanyDashboard />;
+  return (
+    <ApplicationsProvider>
+      <JobSeekerDashboard />
+      {/* <CompanyDashboard /> */}
+    </ApplicationsProvider>
+  );
 };
 
 export default App;
