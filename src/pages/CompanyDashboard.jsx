@@ -6,11 +6,16 @@ import CompanyHeader from '../components/Company/Header';
 import CompanyProfile from '../components/Company/Profile';
 import AddJob from '../components/Company/AddJob';
 import MyJobs from '../components/Company/MyJobs';
+import { useNavigate } from 'react-router-dom';
 
 const companyName = JSON.parse(localStorage.getItem('companyData'))?.name || 'Company';
 
 const CompanyDashboard = () => {
+  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = useState('welcome');
+  const handleViewCandidates = (job, index) => {
+    navigate(`/jobs/${index}/candidates`, { state: { job } });
+  };
   const [postedJobs, setPostedJobs] = useState([]);
 
   const renderContent = () => {
@@ -20,7 +25,14 @@ const CompanyDashboard = () => {
       case 'createJob':
         return <AddJob setPostedJobs={setPostedJobs} />;
       case 'candidates':
-        return <MyJobs jobs={postedJobs} />;
+        return (
+          <MyJobs
+            jobs={postedJobs}
+            onViewCandidates={handleViewCandidates}
+            onEditJob={() => { }}
+            onDeleteJob={() => { }}
+          />
+        );
       case 'welcome':
       default:
         return (
