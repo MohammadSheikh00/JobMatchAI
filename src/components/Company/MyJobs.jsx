@@ -1,13 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const MyJobs = ({ jobs, onDeleteJob, onViewCandidates }) => {
-  const navigate = useNavigate();
-
-  const handleEdit = (job, index) => {
-    navigate('/addjob', { state: { job, index } });
-  };
-
+const MyJobs = ({ jobs, onDeleteJob, onViewCandidates, onEditJob }) => {
   return (
     <div className="container">
       <h3 className="mb-4">📋 My Posted Jobs</h3>
@@ -22,9 +15,7 @@ const MyJobs = ({ jobs, onDeleteJob, onViewCandidates }) => {
                   <div className="btn-group">
                     <button
                       className="btn btn-sm btn-outline-primary"
-                      onClick={() =>
-                        navigate('/addjob', { state: { job, index } })
-                      }
+                      onClick={() => onEditJob(job, index)}
                     >
                       ✏️ Edit
                     </button>

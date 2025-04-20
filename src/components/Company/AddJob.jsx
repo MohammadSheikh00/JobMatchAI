@@ -9,14 +9,8 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import clickSoundFile from '../image/click.mp3';
-import { useLocation, useNavigate } from 'react-router-dom';
 
-const AddJob = ({ setPostedJobs }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const editingJob = location.state?.job || null;
-  const editingIndex = location.state?.index;
-
+const AddJob = ({ setPostedJobs, editingJob = null, editingIndex = null }) => {
   const [job, setJob] = useState({
     title: '',
     description: '',
@@ -34,6 +28,7 @@ const AddJob = ({ setPostedJobs }) => {
 
   const [errors, setErrors] = useState({});
   const clickSound = useRef(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleChange = (e) => {
     setJob({ ...job, [e.target.name]: e.target.value });
@@ -59,15 +54,13 @@ const AddJob = ({ setPostedJobs }) => {
 
     if (validateForm()) {
       setPostedJobs((prevJobs) => {
-        if (editingJob !== null && editingIndex !== undefined) {
-          // تعديل الوظيفة
+        if (editingJob !== null && editingIndex !== null) {
           const updatedJobs = [...prevJobs];
           updatedJobs[editingIndex] = job;
-          alert('Job updated successfully!');
+          setShowSuccessMessage('Job updated successfully!');
           return updatedJobs;
         } else {
-          // وظيفة جديدة
-          alert('Job posted successfully!');
+          setShowSuccessMessage('Job posted successfully!');
           return [...prevJobs, job];
         }
       });
@@ -81,7 +74,8 @@ const AddJob = ({ setPostedJobs }) => {
         numberofpositions: '',
       });
       setErrors({});
-      navigate('/myjobs'); // رجوع لصفحة الوظائف
+
+      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide message after 3s
     }
   };
 
@@ -90,6 +84,9 @@ const AddJob = ({ setPostedJobs }) => {
       <audio ref={clickSound} src={clickSoundFile} preload="auto" />
       <div className="job-form fade-in">
         <h2>{editingJob ? 'Edit Job' : 'Post a New Job'}</h2>
+
+        {showSuccessMessage && <div className="success-message">{showSuccessMessage}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div className="form-group">
