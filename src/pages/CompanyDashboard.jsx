@@ -13,6 +13,11 @@ const CompanyDashboard = () => {
   const [selectedSection, setSelectedSection] = useState('welcome');
   const [postedJobs, setPostedJobs] = useState([]);
 
+  const handleDeleteJob = (index) => {
+    const updatedJobs = postedJobs.filter((_, i) => i !== index);
+    setPostedJobs(updatedJobs); // تحديث حالة الوظائف بعد الحذف
+  };
+
   const handleViewCandidates = (job, index) => {
     console.log('View candidates for job:', job);
   };
@@ -27,9 +32,10 @@ const CompanyDashboard = () => {
         return (
           <MyJobs
             jobs={postedJobs}
+            setJobs={setPostedJobs}  // تمرير setPostedJobs هنا
             onViewCandidates={handleViewCandidates}
             onEditJob={() => {}}
-            onDeleteJob={() => {}}
+            onDeleteJob={handleDeleteJob}  // تمرير دالة الحذف هنا
           />
         );
       case 'welcome':
@@ -44,21 +50,9 @@ const CompanyDashboard = () => {
               textAlign: 'center',
             }}
           >
-            <img
-              src="https://pics.craiyon.com/2023-11-27/OmoFwfmPQ3iujuGmjuA4gg.webp"
-              alt="Company Logo"
-              style={{
-                width: '150px',
-                opacity: 0.07,
-                position: 'absolute',
-                top: '30px',
-                left: '30px',
-              }}
-            />
             <h1 className="display-4 fw-bold z-1 mb-3 animate__animated animate__fadeInDown">
               Welcome back, <span className="text-info">{companyName}</span>!
             </h1>
-
             <p className="lead z-1 mb-4 animate__animated animate__fadeInUp">
               Your command center for managing job postings, candidates, and company profile all in one place.
             </p>

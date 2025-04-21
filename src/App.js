@@ -1,4 +1,4 @@
-import React from 'react';
+import Reactgit  from 'react';
 import JobSeekerDashboard from './pages/JobSeekerDashboard';
 import CompanyDashboard from './pages/CompanyDashboard';
 import { ApplicationsProvider } from './components/JobSeeker/ApplicationsContext'; // ✅ المسار الصحيح
